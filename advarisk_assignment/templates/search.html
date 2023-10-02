@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+	  <style>
+		  div {
+  text-align: center;
+}
+	  </style>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>News Seach App</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="{% static '/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static '/css/style.css'%}" rel="stylesheet">
+
+  </head>
+<body>
+
+<div class="column md"></div>
+<div class="column md" style="margin-top: 50px;text-align: center;"><h1><strong>News Search App</strong></h1></div>
+<div class="column md"></div>
+
+<div class="col md"></div>
+<div class="col md" ></div>
+<div class="col md" style="text-align: right"><h4>Hello <u>{{ user }}</u></h4><a href="/logout/" class="btn btn-danger">Logout</a></div>
+
+
+<div class="col md"></div>
+<div class="col md" style="text-align: center">
+    <!-- Search Form -->
+    <form method="post" action="{% url 'search_news' %}">
+        {% csrf_token %}
+{#        <label for="keyword">Enter a keyword to search for news:</label>#}
+        <input type="text" id="keyword" name="keyword" required placeholder="Search Here" style="margin-top: 25px;text-align: center">
+        <button type="submit" style="margin-right: 100px">Search</button>
+    </form>
+</div>
+<div class="col md"></div>
+
+
+    <!-- Display Previous Searches -->
+    <h2 style="margin-top: 25px;margin-left: 75px">Previous Searches:</h2>
+    <ul style="margin-left: 75px">
+        {% for keyword in keywords %}
+            <li>
+                <a href="{% url 'view_results' keyword.id %}">{{ keyword.phrase }}</a>
+            </li>
+        {% empty %}
+            <li>No previous searches.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <script src="{% static '/js/jquery.min.js'%}"></script>
+    <script src="{% static '/js/bootstrap.min.js'%}"></script>
+    <script src="{% static '/js/scripts.js'%}"></script>
+
+</body>
+</html>
